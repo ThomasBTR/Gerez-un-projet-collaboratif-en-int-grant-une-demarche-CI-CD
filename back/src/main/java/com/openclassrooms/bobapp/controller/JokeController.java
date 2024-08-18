@@ -1,6 +1,7 @@
 package com.openclassrooms.bobapp.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class JokeController {
         this.jokeService = jokeService;
     }
 
+    @CrossOrigin(origins = "http://localhost", allowedHeaders = "*")
     @GetMapping()
     public ResponseEntity<?> getRandomJokes() {
         return ResponseEntity.ok(this.jokeService.getRandomJoke());

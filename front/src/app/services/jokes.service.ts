@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Joke } from '../model/joke.model';
@@ -10,6 +10,11 @@ export class JokesService {
 
   private pathService = 'api/joke';
 
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  });
+
   private subject: BehaviorSubject<Joke | null> = new BehaviorSubject<Joke | null>(null);
 
   constructor(private httpClient: HttpClient) {
@@ -17,7 +22,7 @@ export class JokesService {
   }
 
   public getRandomJoke(): void {
-    this.httpClient.get<Joke>(this.pathService).subscribe((joke: Joke) => this.subject.next(joke));
+    this.httpClient.get<Joke>(this.pathService, {headers: this.headers}).subscribe((joke: Joke) => this.subject.next(joke));
   }
 
   public joke$(): Observable<Joke | null > {
